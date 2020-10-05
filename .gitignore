@@ -351,3 +351,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+zad_2_53/zad_2_53.sln
+*.vcxproj
+*.filters
+*.sln
