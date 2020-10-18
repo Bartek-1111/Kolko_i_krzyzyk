@@ -123,7 +123,7 @@ int main()
             tura--;
             draw(board, tura);
             cout << "Warunek konca.\n";
-            cout << "Wygral gracz " << ((tura % 2 == 0) ? 'X' : 'O') << "!\n";
+            cout << "Wygral gracz " << ((tura % 2 != 0) ? 'X' : 'O') << "!\n";
             system("PAUSE");
             return 0;
         }
