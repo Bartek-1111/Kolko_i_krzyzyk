@@ -110,7 +110,7 @@ int main()
                 }
             }
         }
-        if (!set_cell(&board[0][0], 3, 3, get_pos(odp), (tura % 2) ? 'X' : 'O'))
+        if (!set_cell(&board[0][0], 3, 3, get_pos(odp), (tura % 2 != 0) ? 'X' : 'O'))
         {
             cout << "Pole zajete\n";
             system("PAUSE");
@@ -118,17 +118,20 @@ int main()
         }
         tura++;
         draw(board, tura);
-        if (end_condition(&board[0][0], (tura % 2) ? 'X' : 'O'))
+        if (end_condition(&board[0][0], (tura % 2 == 0) ? 'X' : 'O'))
         {
+            tura--;
+            draw(board, tura);
             cout << "Warunek konca.\n";
-            cout << "Wygral gracz " << ((tura % 2) ? 'X' : 'O') << "!\n";
+            cout << "Wygral gracz " << ((tura % 2 == 0) ? 'X' : 'O') << "!\n";
             system("PAUSE");
             return 0;
         }
-        if (tura >= 9)
+        if (tura > 9)
         {
+            tura--;
             draw(board, tura);
-            cout << "Koniec gry. Wypełniono wszystkie pola. Remis.\n";
+            cout << "Koniec gry. Wypelniono wszystkie pola. Remis.\n";
             system("PAUSE");
             return 0;
         }
