@@ -2,10 +2,38 @@
 
 using namespace std;
 
+bool end_condition(char* tab, char in)
+{
+    for (int i = 0; i < 3; i++)
+    {
+        if ((*(tab + i) == in) && (*(tab + i + 3) == in) && (*(tab + i + 6) == in))
+        {
+            cout << "Wygrana pionowo.\n";
+            return true;
+        }
+        if ((*(tab + i * 3) == in) && (*(tab + i * 3 + 1) == in) && (*(tab + i * 3 + 2) == in))
+        {
+            cout << "Wygrana poziomo.\n";
+            return true;
+        }
+    }
+    if ((*(tab) == in) && (*(tab + 4) == in) && (*(tab + 8) == in))
+    {
+        cout << "Wygrana na skos.\n";
+        return true;
+    }
+    if ((*(tab + 2) == in) && (*(tab + 4) == in) && (*(tab + 6) == in))
+    {
+        cout << "Wygrana na skos.\n";
+        return true;
+    }
+    return false;
+}
+
 bool set_cell(char* tab, int size_x, int size_y, int target_pos, char in)
 {
     const int size = size_x * size_y;
-    cout << "Wypelnianie " << target_pos << '/' << size << " tablicy.\n";
+    //cout << "Wypelnianie " << target_pos << '/' << size << " tablicy.\n";
     if (target_pos >= size) return false;
     if (*(tab + target_pos) == '_') *(tab + target_pos) = in;
     else return false;
@@ -37,7 +65,6 @@ void draw(char in_a[3][3], int tura)
     draw_board(in_a);
 }
 
-//ta funkcja ma "dostać" tablicę 'board' i dodać do niej X lub O na właściwe miejsce
 int get_pos(string in)
 {
     int target_pos = 0;
@@ -60,8 +87,6 @@ int main()
 {
     char board[3][3];
     string odp;
-    char odpA;
-    int odpB;
     int tura = 1;
     for (int i = 0; i < 3; i++)
     {
@@ -70,11 +95,11 @@ int main()
             board[i][j] = '_';
         }
     }
+    draw(board, tura);
     while (1)
     {
         while (1)
         {
-            draw(board, tura);
             cout << "Podaj pole:";
             cin >> odp;
             if (((odp[0] > 64) && (odp[0] < 68)) || ((odp[0] > 96) && (odp[0] < 100)))
@@ -85,22 +110,27 @@ int main()
                 }
             }
         }
-        cout << "Brawo, poprawne dane!\n";
         if (!set_cell(&board[0][0], 3, 3, get_pos(odp), (tura % 2) ? 'X' : 'O'))
         {
             cout << "Pole zajete\n";
             system("PAUSE");
             tura--;
         }
+        draw(board, tura);
+        if (end_condition(&board[0][0], (tura % 2) ? 'X' : 'O'))
+        {
+            cout << "Warunek konca.\n";
+            cout << "Wygral gracz " << ((tura % 2) ? 'X' : 'O') << "!\n";
+            system("PAUSE");
+            return 0;
+        }
         if (tura >= 9)
         {
-            cout << "Koniec gry.\n";
+            draw(board, tura);
+            cout << "Koniec gry. Wypełniono wszystkie pola. Remis.\n";
             system("PAUSE");
+            return 0;
         }
         tura++;
     }
-
-
-    draw(board, tura);
-    system("PAUSE");
 }
