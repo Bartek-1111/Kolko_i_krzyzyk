@@ -61,7 +61,7 @@ void draw(char in_a[3][3], int tura)
     cout << "Tic tac toe v1.0\n";
     cout << "Podaj pole (np. A3 lub a3).\n";
     cout << "Tura:\t" << tura << ".\n";
-    cout << "Grasz jako " << ((tura % 2) ? 'X' : 'O') << ".\n";
+    cout << "Grasz jako " << ((tura % 2 == 0) ? 'X' : 'O') << ".\n";
     draw_board(in_a);
 }
 
