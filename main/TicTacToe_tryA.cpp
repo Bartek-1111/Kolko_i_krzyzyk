@@ -40,7 +40,7 @@ bool set_cell(char* tab, int size_x, int size_y, int target_pos, char in)
     return true;
 }
 
-void draw_board(char in[3][3])
+void draw_board(char* in)
 {
     cout << "_|A|B|C|\n";
     for (int i = 0; i < 3; i++)
@@ -49,16 +49,16 @@ void draw_board(char in[3][3])
         for (int j = 0; j < 3; j++)
         {
             //cout << i << "-" << j << "\n";
-            cout << in[i][j] << "|";
+            cout << *(in + i * 3 + j) << "|";
         }
         cout << "\n";
     }
 }
 
-void draw(char in_a[3][3], int tura)
+void draw(char* in_a, int tura)
 {
     system("cls");
-    cout << "Tic tac toe v1.0\n";
+    cout << "Tic tac toe v2.0\n";
     cout << "Podaj pole (np. A3 lub a3).\n";
     cout << "Tura:\t" << tura << ".\n";
     cout << "Grasz jako " << ((tura % 2 != 0) ? 'X' : 'O') << ".\n";
@@ -95,7 +95,7 @@ int main()
             board[i][j] = '_';
         }
     }
-    draw(board, tura);
+    draw(&board[0][0], tura);
     while (1)
     {
         while (1)
@@ -112,17 +112,16 @@ int main()
         }
         if (!set_cell(&board[0][0], 3, 3, get_pos(odp), (tura % 2 != 0) ? 'X' : 'O'))
         {
-            cout << "Pole zajete\n";
+            cout << "Pole zajete.\n";
             system("PAUSE");
             tura--;
         }
         tura++;
-        draw(board, tura);
+        draw(&board[0][0], tura);
         if (end_condition(&board[0][0], (tura % 2 == 0) ? 'X' : 'O'))
         {
             tura--;
-            draw(board, tura);
-            cout << "Warunek konca.\n";
+            draw(&board[0][0], tura);
             cout << "Wygral gracz " << ((tura % 2 != 0) ? 'X' : 'O') << "!\n";
             system("PAUSE");
             return 0;
@@ -130,7 +129,7 @@ int main()
         if (tura > 9)
         {
             tura--;
-            draw(board, tura);
+            draw(&board[0][0], tura);
             cout << "Koniec gry. Wypelniono wszystkie pola. Remis.\n";
             system("PAUSE");
             return 0;
